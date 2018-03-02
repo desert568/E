@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dao.IDoctorDao">
+    <select id="getDoctorById" parameterType="int" resultType="com.entity.Doctor">
+        select * from tb_doctor where doctor_id=#{doctor_id}
+    </select>
+
+    <select id="getall" resultType="com.entity.Doctor" >
+        select * from tb_doctor
+    </select>
+
+
+    <select id="getallDoctor" resultType="com.entity.Doctor" parameterType="map">
+        select * from tb_doctor d
+        <where>
+            <if test="name != null">
+                and d.name like '%${name}%'
+            </if>
+            <if test="sex != null">
+                and d.sex =#{sex}
+            </if>
+            <if test="ksm != null">
+                and d.ksm =#{ksm}
+            </if>
+        </where>
+        limit #{offset},#{pageSize}
+    </select>
+
+    <delete id="deldoctor" parameterType="int">
+        delete from tb_doctor where doctor_id=#{doctor_id}
+    </delete>
+
+    <insert id="adddoctor" parameterType="com.entity.Doctor">
+          insert into tb_doctor(ksm,name,sex,birthday,address,sfz,phone,ghfy,gzl,czsj,hyzt,xl,dqrs,isok)
+        values(#{ksm},#{name},#{sex},#{birthday},#{address},#{sfz},#{phone},#{ghfy},#{gzl},#{czsj},#{hyzt},#{xl},#{dqrs},#{isok})
+    </insert>
+
+    <update id="updatedoctor" parameterType="com.entity.Doctor">
+        update tb_doctor set ksm =#{ksm}, name =#{name},sex=#{sex},birthday=#{birthday},address=#{address},sfz=#{sfz},phone=#{phone},ghfy=#{ghfy},gzl=#{gzl},czsj=#{czsj},hyzt=#{hyzt},xl=#{xl},dqrs=#{dqrs},isok=#{isok} where doctor_id=#{doctor_id}
+    </update>
+
+
+</mapper>
+
